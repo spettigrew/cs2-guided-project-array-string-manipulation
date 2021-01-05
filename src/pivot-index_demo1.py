@@ -33,10 +33,10 @@ def old_pivot_index(nums):  #runtime O(n^2) (o of n squared)
         # check if current index (i) is the pivot index. (slicing is exclusive)
         left_subarray = nums[:i]
         right_subarray = nums[i+1:] # nums[start(inclusive):end(exclusive)] 
-        # # get sum of left subarray 
-        # left_sum = sum(left_subarray)
-        # # get sum of right subarray
-        # right_sum = sum(right_subarray)
+        # get sum of left subarray 
+        left_sum = sum(left_subarray)
+        # get sum of right subarray
+        right_sum = sum(right_subarray)
         # print(left_subarray, right_subarray)
         # check if they are equal
         if left_sum == right_sum:
@@ -44,8 +44,9 @@ def old_pivot_index(nums):  #runtime O(n^2) (o of n squared)
             return i
     #return -1
     return -1
+    
 
-def pivot_index(nums):
+def pivot_index_left_right(nums):
     # create Left sum and Right sum 
     l_sum = 0
     r_sum = sum(nums[1:])
@@ -64,6 +65,20 @@ def pivot_index(nums):
             r_sum -= nums[i+1]
     return -1 
 
+def pivot_index(nums):
+    total_sum = sum(nums)
+    left_sum = 0
+
+    # as we go through the array, update left_sum
+    for i in range(len(nums)):
+        right_sum = total_sum - left_sum - nums[i] 
+        if left_sum == right_sum:
+            return i
+        left_sum += nums[i]
+
+    return -1
+
 
 print(pivot_index([1,7,3,6,5,6]))
 print(pivot_index([1,2,3]))
+print(pivot_index([]))
